@@ -1,0 +1,45 @@
+from google.colab import drive
+import pandas as pd
+import networkx as nx
+import matplotlib.pyplot as plt
+from collections import Counter
+
+#Load the adjacency matrix CSV
+file_path = '/content/drive/MyDrive/Grafo - Transmissão-3.csv'
+adj_matrix = pd.read_csv(file_path, header=None).values
+
+#Create the graph from the adjacency matrix
+G = nx.from_numpy_array(adj_matrix)
+
+# Calculate the degree of each node
+degrees = [G.degree(n) for n in G.nodes()]
+
+# Count the frequency of each degree
+degree_count = Counter(degrees)
+deg, cnt = zip(*sorted(degree_count.items()))
+
+# Plot the degree distribution as a line graph with dots
+plt.figure(figsize=(10, 6))
+plt.plot(deg, cnt, marker='o', linestyle='-', color='b')
+plt.xlabel("Grau")
+plt.ylabel("Frequência")
+plt.grid(True)
+plt.show()
+
+#Repeating for the other adjacency matrix
+file_path = '/content/drive/MyDrive/Grafo - Profilaxia-3.csv'
+adj_matrix = pd.read_csv(file_path, header=None).values
+
+G = nx.from_numpy_array(adj_matrix)
+
+degrees = [G.degree(n) for n in G.nodes()]
+
+degree_count = Counter(degrees)
+deg, cnt = zip(*sorted(degree_count.items()))
+
+plt.figure(figsize=(10, 6))
+plt.plot(deg, cnt, marker='o', linestyle='-', color='b')
+plt.xlabel("Grau")
+plt.ylabel("Frequência")
+plt.grid(True)
+plt.show()
